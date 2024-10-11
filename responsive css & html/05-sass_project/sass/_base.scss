@@ -1,0 +1,44 @@
+// in this file we are declare common styles like fonts,color,variables declaration
+
+$dark-color: #262626;
+$black-color: #000;
+$primary-color: #d3ab55;
+$secondry-color: #bbb;
+
+
+//font familys
+
+$font-dancingScript: 'Dancing Script', cursive;
+$font-josefinSans: 'Josefin Sans', sans-serif;
+$font-nunito: 'Nunito', sans-serif;
+
+// these mixins include in _components file
+@mixin flexLayout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin textStyles {
+    font-weight: 300;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+@mixin centering($topValue) {
+    position: absolute;
+    top: $topValue;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+}
+
+
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    background-color: $dark-color ;
+}

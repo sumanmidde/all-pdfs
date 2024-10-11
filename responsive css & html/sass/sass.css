@@ -1,0 +1,16 @@
+body {
+  align-items: center;
+  margin: 20px;
+}
+body h1 {
+  background-color: red;
+}
+body h2 {
+  background-color: blue;
+}
+body input {
+  border-radius: 10px;
+}
+body textarea {
+  border-radius: 10px;
+}/*# sourceMappingURL=sass.css.map */

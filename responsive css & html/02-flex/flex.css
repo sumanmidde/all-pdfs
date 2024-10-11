@@ -1,0 +1,28 @@
+.container {
+    background-color: cornflowerblue;
+    width: 100%;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.flex-item {
+    height: 100px;
+    width: 200px;
+    background-color: aqua;
+    border: 1px solid green
+}
+
+.item1 {
+    align-self: flex-start;
+}
+
+.item3 {
+    align-self: flex-start;
+}
+
+.item5 {
+    align-self: flex-end;
+}

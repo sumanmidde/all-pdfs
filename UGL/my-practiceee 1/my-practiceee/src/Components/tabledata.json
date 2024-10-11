@@ -1,0 +1,113 @@
+{
+    "TableData": [
+      {
+        "id": 1,
+        "trainNumber": "-",
+        "unitNumber": "R09",
+        "alarmSource": "PAS|ACC|FIR|+2",
+        "mode": "Stable",
+        "routineService": "2024-06-28",
+        "standingAlarm": 88,
+        "nextStation": "-",
+        "constraints": "-",
+        "lastCommunication": "2023-06-28 10:30:00"
+      },
+      {
+        "id": 2,
+        "trainNumber": "NCN2",
+        "unitNumber": "R03",
+        "alarmSource": "-",
+        "mode": "Operational",
+        "routineService": "2024-01-28",
+        "standingAlarm": 34,
+        "nextStation": "Hi-tech city",
+        "constraints": "-",
+        "lastCommunication": "2024-06-28 09:45:00"
+      },
+      {
+        "id": 3,
+        "trainNumber": "-",
+        "unitNumber": "R04",
+        "alarmSource": "PAS|ACC|FIR|+3",
+        "mode": "Stable",
+        "routineService": "2022-11-27",
+        "standingAlarm": 58,
+        "nextStation": "-",
+        "constraints": "NEPT, NMTN, WEOS",
+        "lastCommunication": "2024-06-27 14:20:00"
+      },
+      {
+        "id": 4,
+        "trainNumber": "NCN2",
+        "unitNumber": "R07",
+        "alarmSource": "PAS|ACC|FIR|+6",
+        "mode": "Operational",
+        "routineService": "2024-12-27",
+        "standingAlarm": 66,
+        "nextStation": "Madhapur",
+        "constraints": "NEPT, NMTN, WEOS",
+        "lastCommunication": "2023-01-22 08:00:00"
+      },
+      {
+        "id": 5,
+        "trainNumber": "NCN2",
+        "unitNumber": "R02",
+        "alarmSource": "PAS|ACC|FIR|+5",
+        "mode": "Stable",
+        "routineService": "2024-06-27",
+        "standingAlarm": 77,
+        "nextStation": "Jublee Hills",
+        "constraints": "NEPT, NMTN, WEOS",
+        "lastCommunication": "2024-02-23 17:50:00"
+      },
+      {
+        "id": 6,
+        "trainNumber": "NCN2",
+        "unitNumber": "R08",
+        "alarmSource": "PAS|ACC|FIR|+3",
+        "mode": "Operational",
+        "routineService": "2024-06-28",
+        "standingAlarm": 42,
+        "nextStation": "-",
+        "constraints": "NEPT, NMTN, WEOS",
+        "lastCommunication": "2024-01-28 11:15:00"
+      },
+      {
+        "id": 7,
+        "trainNumber": "-",
+        "unitNumber": "R08",
+        "alarmSource": "PAS|ACC|FIR|+2",
+        "mode": "Operational",
+        "routineService": "2024-06-28",
+        "standingAlarm": 42,
+        "nextStation": "Secunderabad",
+        "constraints": "-",
+        "lastCommunication": "2023-08-21 11:15:00"
+      },
+      {
+        "id": 8,
+        "trainNumber": "WP45",
+        "unitNumber": "R08",
+        "alarmSource": "PAS|ACC|FIR|+6",
+        "mode": "Operational",
+        "routineService": "2024-04-28",
+        "standingAlarm": 42,
+        "nextStation": "Secunderabad",
+        "constraints": "-",
+        "lastCommunication": "2024-01-28 11:15:00"
+      },
+      {
+        "id": 9,
+        "trainNumber": "WP45",
+        "unitNumber": "R01",
+        "alarmSource": "G",
+        "mode": "Stable",
+        "routineService": "2024-02-27",
+        "standingAlarm": 55,
+        "nextStation": "Begumpet",
+        "constraints": "-",
+        "lastCommunication": "2023-09-27 13:30:00"
+      }
+    ]
+  }
+  

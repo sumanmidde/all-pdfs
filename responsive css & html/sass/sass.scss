@@ -1,0 +1,27 @@
+@import "test";
+
+$primary-color: red;
+$secondry-color: blue;
+
+body {
+    align-items: center;
+    margin: 20px;
+
+    h1 {
+        background-color: $primary-color;
+    }
+
+    h2 {
+        background-color: $secondry-color;
+    }
+
+    input {
+        border-radius: 10px;
+    }
+
+
+
+    textarea {
+        border-radius: 10px;
+    }
+}

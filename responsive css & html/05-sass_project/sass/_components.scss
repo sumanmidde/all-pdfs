@@ -1,0 +1,45 @@
+.logo {
+    font-size: 70px;
+    color: $primary-color;
+    //link is a inline elements so define block we include the mixin from _base
+    @include flexLayout;
+    width: 110px;
+    height: 110px;
+    border: 3px solid $primary-color;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.main-name {
+    font-family: $font-nunito;
+    font-size: 50px;
+    color: $secondry-color;
+    @include textStyles;
+
+}
+
+.sub-name {
+    font-family: $font-josefinSans;
+    font-size: 18px;
+    color: $secondry-color;
+    text-align: center;
+    @include textStyles;
+}
+
+.main-heading {
+    font-family: $font-dancingScript;
+    font-size: 100px;
+    font-weight: 300;
+    color: $primary-color;
+    margin-bottom: 40px;
+
+}
+
+.sub-heading {
+    font-family: $font-josefinSans;
+    font-size: 60px;
+    font-weight: 300;
+    color: $secondry-color;
+    margin-bottom: 80px;
+
+}

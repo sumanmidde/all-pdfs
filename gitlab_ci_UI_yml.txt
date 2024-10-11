@@ -1,0 +1,397 @@
+cleanup_old_builds:
+  stage: cleanup
+ # Specify the Docker image to use as the base for jobs
+image: node:10.7.0  # Adjust the Node.js version as needed
+
+# Define stages for the pipeline
+stages:
+  - build
+
+# Install AWS CLI before running any jobs
+before_script:
+  - apt-get update && apt-get install -y awscli
+  #- npm install
+
+# Jobs definition
+install_dependencies_job:
+  stage: build
+  script:
+   # - npm install
+    #- exit 1
+    - echo "Installing node dependencies..."
+    - npm cache clean --force
+    - npm install apexcharts@3.35.3 ng-apexcharts@1.7.4 --legacy-peer-deps
+    - node -v
+    - ng version
+
+    - mkdir -p src/environments
+    - aws s3 cp s3://es-os-bucket/CICD/environment.ts src/environments/environment.ts
+    - aws s3 cp s3://es-os-bucket/CICD/environment.prod.ts src/environments/environment.prod.ts
+    - ng build --configuration production
+
+    - npm config set prefix '~/.npm-global'
+    - export PATH=~/.npm-global/bin:$PATH
+    - source ~/.bashrc
+
+    - node ./scripts/set-build-info.js
+    
+    - echo "Renaming existing build folder with timestamp..."
+    - TIMESTAMP=$(date +'%d%m%Y%H%M%S')
+    - mv dist/anchor_ui dist/anchor_ui_$TIMESTAMP
+    - aws s3 cp dist/anchor_ui_$TIMESTAMP s3://es-os-bucket/builds/$CI_COMMIT_SHA-$TIMESTAMP/ --recursive
+    - echo "Cleaning previous build from QA server..."
+    - sshpass -p "$PASSWORD" ssh $REMOTE_USER@$REMOTE_HOST 'rm -rf /usr/share/nginx/html/anchor_ui/*'
+
+    - echo "Copying latest build to QA server..."
+    - sshpass -p "$PASSWORD" scp -r dist/anchor_ui_$TIMESTAMP/ $REMOTE_USER@$REMOTE_HOST:/usr/share/nginx/html/
+
+  tags:
+    - build
+  only:
+    - qa
+    - uat
+    - main
+    - ANC-1637
+
+====================================================================================================
+
+09/08/2024  
+
+# Specify the Docker image to use as the base for jobs
+image: node:10.7.0  # Adjust the Node.js version as needed
+
+# Define stages for the pipeline
+stages:
+  - build
+
+# Install AWS CLI before running any jobs
+before_script:
+  - apt-get update && apt-get install -y awscli
+  #- npm install
+
+# Jobs definition
+install_dependencies_job:
+  stage: build
+  script:
+   # - npm install
+    #- exit 1
+    - echo "Installing node dependencies..."
+    - npm cache clean --force
+    - npm install apexcharts@3.35.3 ng-apexcharts@1.7.4 --legacy-peer-deps
+    - node -v
+    - ng version
+
+    - mkdir -p src/environments
+    - aws s3 cp s3://es-os-bucket/CICD/environment.ts src/environments/environment.ts
+    - aws s3 cp s3://es-os-bucket/CICD/environment.prod.ts src/environments/environment.prod.ts
+    - ng build --configuration production
+
+    - npm config set prefix '~/.npm-global'
+    - export PATH=~/.npm-global/bin:$PATH
+    - source ~/.bashrc
+
+    - node ./scripts/set-build-info.js
+    
+    - echo "Renaming existing build folder with timestamp..."
+    - TIMESTAMP=$(date +'%d%m%Y%H%M%S')
+    - mv dist/anchor_ui dist/anchor_ui_$TIMESTAMP
+    - aws s3 cp dist/anchor_ui_$TIMESTAMP s3://es-os-bucket/builds/$CI_COMMIT_SHA-$TIMESTAMP/ --recursive
+    - echo "Cleaning previous build from QA server..."
+    - sshpass -p "$PASSWORD" ssh $REMOTE_USER@$REMOTE_HOST 'rm -rf /usr/share/nginx/html/anchor_ui/*'
+
+    - echo "Copying latest build to QA server..."
+    - sshpass -p "$PASSWORD" scp -r dist/anchor_ui_$TIMESTAMP/ $REMOTE_USER@$REMOTE_HOST:/usr/share/nginx/html/
+
+  tags:
+    - build
+  only:
+    - qa
+    - uat
+    - main
+    - ANC-1637
+===========================================================================================================
+13/08/2024   -- success 
+
+
+# Specify the Docker image to use as the base for jobs
+image: node:10.7.0  # Adjust the Node.js version as needed
+
+# Define stages for the pipeline
+stages:
+  - build
+  - cleanup
+
+# Install AWS CLI before running any jobs
+before_script:
+  - apt-get update && apt-get install -y awscli jq
+  #- npm install
+
+# Jobs definition
+install_dependencies_job:
+  stage: build
+  script:
+   # - npm install
+    #- exit 1
+    - echo "Installing node dependencies..."
+    - npm cache clean --force
+    - npm install apexcharts@3.35.3 ng-apexcharts@1.7.4 --legacy-peer-deps
+    - node -v
+    - ng version
+
+    - mkdir -p src/environments
+    - aws s3 cp s3://es-os-bucket/CICD/environment.ts src/environments/environment.ts
+    - aws s3 cp s3://es-os-bucket/CICD/environment.prod.ts src/environments/environment.prod.ts
+    - ng build --configuration production
+
+    - npm config set prefix '~/.npm-global'
+    - export PATH=~/.npm-global/bin:$PATH
+    - source ~/.bashrc
+
+    - node ./scripts/set-build-info.js
+    
+    - echo "Renaming existing build folder with timestamp..."
+    - TIMESTAMP=$(date +'%d%m%Y%H%M%S')
+    - mv dist/anchor_ui dist/anchor_ui_$TIMESTAMP
+    - aws s3 cp dist/anchor_ui_$TIMESTAMP s3://es-os-bucket/builds/$CI_COMMIT_SHA-$TIMESTAMP/ --recursive
+    - echo "Cleaning previous build from QA server..."
+    - sshpass -p "$PASSWORD" ssh $REMOTE_USER@$REMOTE_HOST 'rm -rf /usr/share/nginx/html/anchor_ui/*'
+
+    - echo "Copying latest build to QA server..."
+    - sshpass -p "$PASSWORD" scp -r dist/anchor_ui_$TIMESTAMP/ $REMOTE_USER@$REMOTE_HOST:/usr/share/nginx/html/
+  
+  tags:
+    - build
+
+
+cleanup_old_builds:
+  stage: cleanup
+  script:
+    - echo "Cleaning up old builds..."
+    - BUILD_PREFIX="builds/"
+    - BUILD_DIRS=$(aws s3 ls s3://es-os-bucket/$BUILD_PREFIX --recursive | awk '{print $4}' | grep -E '^builds/' | sort)
+    - BUILD_COUNT=$(echo "$BUILD_DIRS" | wc -l)
+    - BUILD_DIRS=$(aws s3 ls s3://es-os-bucket/$BUILD_PREFIX --recursive | awk '{print $4}' | grep -E '^builds/' | sort); BUILD_COUNT=$(echo "$BUILD_DIRS" | wc -l); if [ $BUILD_COUNT -gt 2 ]; then OLD_BUILDS=$(echo "$BUILD_DIRS" | head -n -2); for build in $OLD_BUILDS; do aws s3 rm s3://es-os-bucket/$build --recursive; done; else echo "No old builds to clean up."; fi
+
+    # - if [ $BUILD_COUNT -gt 2 ]; then        
+    #     OLD_BUILDS=$(echo "$BUILD_DIRS" | head -n -2);        
+    #     for build in $OLD_BUILDS; do         
+    #       aws s3 rm s3://es-os-bucket/$build --recursive;
+    #     done;
+    #    else
+    #     echo "No old builds to clean up."
+    #   fi
+
+
+  
+  tags:
+    - build
+
+  
+  only:
+    - qa
+    - uat
+    - main
+    - ANC-1637
+===========================
+Dockerfile_api
+
+
+env_api
+
+
+# Stage 1: Build stage
+FROM golang:1.22 as builder
+
+# Set necessary environment variables
+ENV GO111MODULE=on \
+    CGO_ENABLED=0 \
+    GOOS=linux \
+    GOARCH=amd64   
+
+
+
+# Stage 2: Production stage
+FROM alpine:latest
+
+WORKDIR /app
+
+# Copy the built binary from the builder stage
+COPY ./artifacts/anchorapi /app/anchorapi
+
+# Copy the environment file from the builder stage
+COPY  ./env_api.env /app/env_api.env
+
+# Set permissions and start the application
+RUN chmod +x anchorapi
+CMD ["./anchorapi"]
+
+==============================================================
+22-08-24   working code 
+
+
+stages:
+  - build
+  - docker-build
+
+variables:
+  IMAGE_NAME: "gitlabnew.techwave.net:5050/anchor/anchor-api"
+  CONTAINER_REGISTRY: "gitlabnew.techwave.net:5050"
+
+before_script:
+  # No need to install awsci here if it's only used in the build stage
+
+build:
+  stage: build
+  image: golang:1.22-alpine  # Use the appropriate Go and Alpie version
+  tags:
+    - build
+  script:
+    - echo "Installing dependencies"
+    - go mod tidy
+    - echo "Building the package"
+    - go build -o anchorapi .
+    - mkdir -p artifacts  # Create the artifacts directory in the Docker contex
+    - mv anchorapi artifacts/anchorapi  # Move the binary to the artifacts directory
+    - echo "Stopping previous build API service"
+    - pkill -TERM -f 'anchorapi' || true  # Use -TERM to gracefully terminate
+    - mkdir -p src/environments_api
+    - aws s3 cp s3://es-os-bucket/CICD/ATT12012.env ./.env
+    - ls -lh ".env"
+    - echo "Starting the latest build API service"
+    - nohup ./artifacts/anchorapi > app.log 2>&1 &  # Redirect stdout and stderr to a log file
+  artifacts:
+    paths:
+      - "artifacts/anchorapi"  # Save the built binary as an artifact
+    # expire_in: 1 week  # Set expiration time for the artifact
+  only:
+    - main
+    - uat
+    - qa
+    - EO-1707
+
+docker-build:
+  stage: docker-build
+  #image: docker:latest  # Use Docker image for Docker commands
+  #services:
+   # - docker:dind  # Docker-in-Docker service for building images
+  tags:
+    - build  # Ensure the Docker commands run on the same runner as build
+  #dependencies:
+   # - build  # Ensure this job depends on the build stage and has access to its artifacts
+  variables:
+       GIT_CHECKOUT: "false"
+  script:
+    # Generate timestamp
+     
+    - export TIMESTAMP=$(date +%Y%m%d%H%M%S)
+    
+    # Build Docker image with timestamp tag
+    - docker build -t "$IMAGE_NAME:$TIMESTAMP" -f Dockerfile.api .
+    #- docker run  "$IMAGE_NAME:$TIMESTAMP"
+    
+    # Log in to the GitLab Container Registry
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CONTAINER_REGISTRY
+    
+    # Push Docker image to GitLab Container Registry
+    - docker push "$IMAGE_NAME:$TIMESTAMP"
+    
+    # Save Docker image as artifact
+    - docker save -o "artifact_${TIMESTAMP}.tar" "$IMAGE_NAME:$TIMESTAMP"
+
+    # Debugging:  if the tar file exiss and print its details
+    - ls -lh "artifact_${TIMESTAMP}.tar"
+
+  only:
+    - EO-1707
+
+=====================
+
+Dockerfile
+
+# Stage 1: Build stage
+FROM golang:1.22 as builder
+
+# Set necessary environment variables
+ENV GO111MODULE=on \
+    CGO_ENABLED=0 \
+    GOOS=linux \
+    GOARCH=amd64   
+
+
+
+# Stage 2: Production stage
+FROM golang:1.22 
+
+WORKDIR /app
+
+# Copy the built binary from the builder stage
+COPY ./artifacts/anchorapi /app/anchorapi
+
+# Copy the environment file from the builder stage
+COPY ./.env /app/.env
+
+# Set permissions and start the application
+RUN chmod +x anchorapi
+CMD ["./anchorapi"]
+
+
+====================================
+ need to know this:
+steps : access EC2 instance with existing SSH key pair
+       download and install gitlab runner with sudo commands
+       register runner with register Tokens take from settings -> ci/cd options in gitlab
+       add a tags and select the Excuter 
+       verify the gitlab runner in gitlab 
+
+Deploying a Docker image inside a QA server using GitLab Runner with the Shell executor involves configuring your .gitlab-ci.yml file to build, pull, and run the Docker image directly on the server. Below are the steps to accomplish this:
+
+Prerequisites
+Docker Installed on QA Server: Ensure Docker is installed and running on your QA server where the GitLab Runner is configured.
+GitLab Runner with Shell Executor: Ensure that the GitLab Runner on your QA server is configured to use the Shell executor.
+Step 1: Set Up GitLab CI/CD Pipeline
+Create/Update the .gitlab-ci.yml File:
+
+This file defines the CI/CD pipeline, which includes building, pulling, and running a Docker image on the QA server.
+Here’s an example .gitlab-ci.yml file:
+
+   stages:
+  - build
+  - deploy
+
+variables:
+  DOCKER_IMAGE: "your-docker-image-name"
+  DOCKER_TAG: "latest"
+
+build:
+  stage: build
+  script:
+    - echo "Building Docker image..."
+    - docker build -t $DOCKER_IMAGE:$DOCKER_TAG .
+    - echo "Pushing Docker image to registry..."
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    - docker tag $DOCKER_IMAGE:$DOCKER_TAG $CI_REGISTRY/$CI_PROJECT_PATH/$DOCKER_IMAGE:$DOCKER_TAG
+    - docker push $CI_REGISTRY/$CI_PROJECT_PATH/$DOCKER_IMAGE:$DOCKER_TAG
+  only:
+    - branches
+
+deploy:
+  stage: deploy
+  script:
+    - echo "Deploying Docker image..."
+    - docker pull $CI_REGISTRY/$CI_PROJECT_PATH/$DOCKER_IMAGE:$DOCKER_TAG
+    - docker stop $DOCKER_IMAGE || true
+    - docker rm $DOCKER_IMAGE || true
+    - docker run -d --name $DOCKER_IMAGE -p 80:80 $CI_REGISTRY/$CI_PROJECT_PATH/$DOCKER_IMAGE:$DOCKER_TAG
+  only:
+    - branches
+Explanation:
+build stage: This job builds the Docker image and pushes it to the GitLab Container Registry.
+deploy stage: This job pulls the Docker image from the registry, stops and removes any existing container, and then runs the new container.
+Step 2: Configure GitLab CI/CD Variables
+Set Up CI/CD Variables:
+In your GitLab project, navigate to Settings > CI/CD > Variables.
+Add the following variables:
+CI_REGISTRY_USER: Your GitLab username or a deploy token username.
+CI_REGISTRY_PASSWORD: Your GitLab password or a deploy token password.
+DOCKER_IMAGE: The name of your Docker image.
+DOCKER_TAG: The tag of your Docker image, typically latest.

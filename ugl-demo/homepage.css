@@ -1,0 +1,435 @@
+body {
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: white;
+}
+
+/* Main Heading Styling */
+.main-heading {
+    padding-top: 80px;
+    padding-left: 180px;
+    color: white;
+    font-size: 16px;
+
+}
+
+.main-data {
+    /* padding-top: 80px; */
+    padding-left: 150px;
+    color: white;
+    font-size: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.list {
+    display: flex;
+    flex-direction: row;
+}
+
+li {
+    list-style: none;
+    margin: 10px;
+}
+
+.body-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 20px;
+    /* Adds space between the blocks */
+    width: 80%;
+    height: 80%;
+    padding-top: 30px;
+    margin-left: 170px;
+    margin-right: 10px;
+
+}
+
+
+
+/* Block Styles */
+.block {
+    background-color: #282c34;
+    color: white;
+    display: flex;
+    justify-content: flex-start;
+    align-items: start;
+    border: 1px solid white;
+    font-size: 20px;
+    padding-left: 10px;
+    padding-bottom: 10px;
+    margin-top: 10px;
+}
+
+/* Navbar Styles */
+.Navbar {
+    display: flex;
+    height: 30px;
+    align-items: center;
+    background-color: #282c34;
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    left: 0px;
+    right: 0px;
+    z-index: 1000;
+}
+
+.Navbar h2 {
+    color: white;
+    margin-left: 40px;
+}
+
+.normal-font-weight {
+    font-weight: normal;
+    font-size: 25px;
+}
+
+.Navbar h4 {
+    color: #61dafb;
+    margin-left: 10px;
+    font-size: 12px;
+}
+
+.info-container {
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    color: #61dafb;
+    font-size: 10px;
+}
+
+.loop-icon {
+    background-color: dimgrey;
+    border-radius: 20px;
+    color: #61dafb;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.add-ticket-button {
+    padding: 6px 9px;
+    border-radius: 15px;
+    border-width: 1px;
+    font-size: 12px;
+    cursor: pointer;
+    color: #61dafb;
+    margin-right: -400px;
+    border-color: #61dafb;
+    background-color: #282c34;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    font-size: 13px;
+    background-color: black;
+    margin-left: auto;
+    margin-right: -17px;
+    height: 50px;
+    color: white;
+}
+
+.user .profile {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: dimgrey;
+    color: #0e86a7;
+    margin-left: 5px;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: 50px;
+    height: 100vh;
+    background-color: #181b20;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 70px;
+    left: 0;
+    position: fixed;
+    z-index: 20;
+}
+
+.sidebar-item,
+.sidebar-menu {
+    width: 100%;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    justify-content: center;
+}
+
+.sidebar-back-button {
+    margin-top: -10px;
+    background-color: #3e4246;
+    padding: 10px 20px;
+}
+
+.sidebar-item svg,
+.sidebar-menu svg,
+.sidebar-back-button svg {
+    font-size: 18px;
+}
+
+.arrow-right-icon {
+    margin-left: 0px;
+    margin-right: -15px;
+}
+
+.ticket-summary-sidebar {
+    width: 35px;
+    z-index: 99;
+    background-color: #282c34;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 100px;
+    position: fixed;
+    left: 50px;
+    height: 100vh;
+}
+
+.ticket-summary-title {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    margin-bottom: 10px;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.ticket-summary-count {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    background-color: #0e86a7;
+    font-size: 14px;
+    color: white;
+    margin-top: 10px;
+    border-radius: 10px;
+    border: none;
+    height: 30px;
+}
+
+.details-sidebar {
+    align-items: center;
+    width: 40px;
+    background-color: #2f3337;
+    border: 1px solid black;
+    padding-top: 100px;
+    position: fixed;
+    left: 80px;
+    height: 100vh;
+    color: white;
+}
+
+.details-item {
+    display: flex;
+    font-size: 13px;
+    writing-mode: vertical-rl;
+    align-items: center;
+    transform: rotate(180deg);
+    margin-top: 7px;
+    gap: 15px;
+    border-top: 1px solid black;
+    text-align: center;
+    width: 100%;
+}
+
+.details-count {
+    writing-mode: vertical-rl;
+    background-color: #0e86a7;
+    font-size: 14px;
+    border-radius: 10px;
+    color: white;
+    height: 35px;
+    margin-top: 10px;
+    width: 20px;
+}
+
+
+.block {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    /* Ensures the image covers the block without distortion */
+}
+
+.train {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+}
+
+
+.grid-item {
+    background-color: #333;
+    color: white;
+    border: 1px solid white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    position: relative;
+}
+
+/* Image styling */
+.block-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+}
+
+/* Table styling */
+.info-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.info-table th,
+.info-table td {
+    border: 1px solid rgb(9, 9, 9);
+    padding: 8px;
+    text-align: center;
+}
+
+.info-table th {
+    /* background-color: #444; */
+    color: white;
+}
+
+.info-table td {
+    /* background-color: #555; */
+    color: white;
+}
+
+.reset-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.reset-table th,
+.reset-table td {
+    border: 1px solid rgb(7, 7, 7);
+    padding: 8px;
+    text-align: center;
+}
+
+.reset-table th {
+    color: white;
+}
+
+.reset-table td {
+    color: white;
+}
+
+@media (max-width: 1044px) {
+    .main-heading {
+        padding-top: 50px;
+        padding-left: 20px;
+        font-size: 14px;
+    }
+
+    .main-data {
+        padding-left: 20px;
+        font-size: 8px;
+        flex-direction: column;
+    }
+
+    .body-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        gap: 10px;
+        margin-left: 120px;
+        margin-right: 20px;
+        width: 95%;
+        padding-top: 20px;
+    }
+
+    .Navbar {
+        padding: 10px;
+    }
+
+    .Navbar h2 {
+        margin-left: 10px;
+        font-size: 18px;
+    }
+
+    .sidebar {
+        width: 40px;
+    }
+
+    .ticket-summary-sidebar {
+        left: 40px;
+    }
+
+    .details-sidebar {
+        left: 70px;
+    }
+
+    .add-ticket-button {
+        margin-right: 0;
+    }
+
+    .info-container {
+        font-size: 8px;
+    }
+
+    .block {
+        font-size: 16px;
+    }
+}
+
+
+/* Mobile Phones (Extra Small) */
+@media (max-width: 480px) {
+
+    /* Styles for small mobile phones */
+
+
+
+}
+
+/* Standard Mobile Phones (Small) */
+@media only screen and (max-width: 576px) {
+
+    /* Styles for standard mobile phones */
+
+
+}
+
+/* Tablets (Medium) */
+@media (max-width: 768px) {
+    /* Styles for tablets */
+}
+
+/* Tablets in Landscape or Small Laptops (Large) */
+@media (max-width: 992px) {
+    /* Styles for tablets in landscape or small laptops */
+}
+
+/* Laptops and Desktops (Extra Large) */
+@media (max-width: 1200px) {
+    /* Styles for laptops and desktops */
+}
+
+/* Ultra-Wide Screens (Extra Extra Large) */
+@media (max-width: 1600px) {
+    /* Styles for ultra-wide monitors */
+}

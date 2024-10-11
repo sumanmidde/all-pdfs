@@ -1,0 +1,142 @@
+/* Reset some default styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+
+/* Navbar styling */
+.navbar {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 10%;
+    z-index: 1000;
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar a {
+    color: white;
+    padding: 10px 15px;
+    text-decoration: none;
+}
+
+.navbar .brand {
+    font-size: 1.5em;
+}
+
+.navbar .menu a:hover {
+    background-color: #575757;
+}
+
+/* Sidebar styling */
+.sidebar {
+    background-color: #f4f4f4;
+    width: 100px;
+    position: fixed;
+    top: 50px;
+    height: 100%;
+    overflow-y: auto;
+    padding-top: 20px;
+}
+
+.left-sidebar {
+    left: 0;
+    width: 40px;
+
+}
+
+.sidebar2 {
+    background-color: #615e5e;
+    width: 100px;
+    position: fixed;
+    top: 50px;
+    height: 100%;
+    overflow-y: auto;
+    padding-top: 30px;
+}
+
+.left-sidebar2 {
+    left: 30px;
+    width: 30px;
+}
+
+.left-sidebar3 {
+    left: 50px;
+    width: 30px;
+}
+
+.right-sidebar {
+    right: 0;
+}
+
+.sidebar ul {
+    list-style-type: none;
+}
+
+.sidebar li {
+    padding: 10px;
+}
+
+.sidebar li a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+}
+
+.sidebar li a:hover {
+    background-color: #ddd;
+}
+
+/* Main content styling */
+.content {
+    margin: 50px 220px;
+    /* Adjust margins to fit between the sidebars */
+    padding: 20px;
+    background: #131212;
+    max-height: auto;
+    width: auto;
+    /* min-height: 100vh; */
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 150px;
+    }
+
+    .content {
+        margin: 50px 170px;
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar-container {
+        flex-direction: column;
+    }
+
+    .menu {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .content {
+        margin: 20px;
+    }
+}
